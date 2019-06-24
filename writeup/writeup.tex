@@ -2,120 +2,7 @@
 \title{GUIssing game}
 \author{Izaak van Dongen}
 
-% so the title can be accessed by fancyhdr (and is automatically correctly
-% spelled etc)
-\makeatletter
-\let\thetitle\@title
-\makeatother
-
-% fonts
-\usepackage[p,osf]{cochineal}
-\usepackage[scale=.95,type1]{cabin}
-\usepackage[cochineal,bigdelims,cmintegrals,vvarbb]{newtxmath}
-% fixed width font with 80 chars per listing line
-\usepackage[scaled=.94]{newtxtt}
-\usepackage[cal=boondoxo]{mathalfa}
-
-% make the document take up more of the page
-\usepackage[margin=1in,headheight=13.6pt]{geometry}
-
-% no paragraph indent
-\usepackage[parfill]{parskip}
-
-% custom document header/footer
-\usepackage{fancyhdr}
-\usepackage{lastpage}
-
-\pagestyle{fancy}
-\fancyhf{}
-\lhead{\thetitle}
-\rhead{Izaak van Dongen}
-\rfoot{Page \thepage\ of \pageref{LastPage}}
-
-% pretty table rules and multirow entries
-\usepackage{booktabs}
-\usepackage{multirow}
-
-% plotting mathematical functions (needs version request)
-\usepackage{pgfplots}
-\pgfplotsset{compat=1.15}
-
-% \url function and clickable table of contents. no ugly red boxes though
-\usepackage[hidelinks]{hyperref}
-
-% maths symbols and other stuff (supersedes the ams* packages)
-\usepackage{mathtools}
-% provides \abs
-\usepackage{commath}
-
-% For framing definitions
-\usepackage[framemethod=tikz]{mdframed}
-\usepackage[most]{tcolorbox}
-
-\newtcolorbox{definition}{
-freelance,
-before=\par\vspace{2\bigskipamount}\noindent,
-after=\par\bigskip,
-frame code={
-  \node[
-  anchor=south west,
-  inner xsep=8pt,
-  xshift=8pt,
-  rounded corners=5pt,
-  font=\bfseries\color{white},
-  fill=gray] at (frame.north west) (tit) {\strut Definition:};
-  \draw[
-  line width=3pt,
-  rounded corners=5pt,gray
-  ] (tit.west) -| (frame.south west) -- ([xshift=15pt]frame.south west);
-},
-interior code={},
-top=2pt
-}
-
-% for better table of contents stuff, providing the \listof* commands and not
-% listing the tables in the table of contents
-\usepackage[nottoc,notlof,notlot]{tocbibind}
-
-% more advanced handling of utf8 and fonts or something. apparently good to have
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-
-% bibliography management with square braces for citations
-\usepackage[square]{natbib}
-
-% graphics, like eps files and stuff (supersedes graphics)
-\usepackage{graphicx}
-
-% used to horizontally align floats
-\usepackage{subfig}
-
-% used for figures
-\usepackage{float}
-
-% needed for colouring and stuff (xcolor supersedes color)
-\usepackage{xcolor}
-
-\definecolor{codegreen}{rgb}{ 0,0.6,0}
-
-% listings of code
-\usepackage{minted}
-\setminted{breaklines,
-           breakbytokenanywhere,
-           linenos
-}
-\usemintedstyle{friendly}
-% bigger line numbers
-\renewcommand\theFancyVerbLine{\footnotesize\arabic{FancyVerbLine}}
-
-% that can break across pages while being captioned figures
-\usepackage{caption}
-\newenvironment{longlisting}
-{\addvspace{\baselineskip}\captionsetup{type=listing}}
-{\addvspace{\baselineskip}}
-
-% allow maths to break across pages
-\allowdisplaybreaks
+\usepackage{mysty}
 
 \begin{document}
     \maketitle\thispagestyle{empty} % no page number under title
@@ -124,14 +11,14 @@ top=2pt
 
     \section{Introduction}
 
-    This project is the sequel to the popular \texttt{assignment\_guessing},
-    at \url{https://github.com/goedel-gang/assignment_guessing}, now featuring
-    a very useful and fluid graphical interface, more object orientation, and
+    This project is the sequel to the popular \texttt{assignment\_guessing}, at
+    \url{https://github.com/goedel-gang/assignment_guessing}, now featuring a
+    very useful and fluid graphical interface, more object orientation, and
     cleaner general coding practice.
 
-    It uses the same techniques to search both $\mathbb{Q}$ and $\mathbb{Z}$,
-    but doesn't implement the linear approach to either, as it's not really
-    preferable in any circumstance.
+    It uses the same techniques to search both \(\mathbb{Q}\) and
+    \(\mathbb{Z}\), but doesn't implement the linear approach to either, as it's
+    not really preferable in any circumstance.
 
     \section{Programs}
 
@@ -172,9 +59,9 @@ top=2pt
 
     Listing \ref{lst:binary} shows a class implementing this protocol, namely by
     performing a binary search. As previously discussed, this version of binary
-    search works on the entirety of $\mathbb{Z}$, by determining bounds in a
+    search works on the entirety of \(\mathbb{Z}\), by determining bounds in a
     similar `binary' manner (at least, it should be able to find sensible bounds
-    in $O(\log_2(n))$ (and then guess the number in $O(\log_2(n))$).
+    in \(\BigO(\log_2(n))\) (and then guess the number in \(\BigO(\log_2(n))\)).
 
 \begin{longlisting}
 \inputminted{Pascal}{../UBinarySearch.pas}
@@ -183,11 +70,11 @@ top=2pt
 \end{longlisting}
 
     Listing \ref{lst:sternbrocot} shows a class implementing a search on
-    $\mathbb{Q}$. This is separated from listing \ref{lst:binary} as when
+    \(\mathbb{Q}\). This is separated from listing \ref{lst:binary} as when
     considering the case of integers, this effectively degenerates into a slow
-    linear search (taking the consecutive upper mediants of $\frac{0}{1}$ and
-    $\frac{1}{0}$ results in the sequence $\frac{1}{1}$, $\frac{2}{1}$,
-    $\frac{3}{1}$\ldots).
+    linear search (taking the consecutive upper mediants of \(\frac{0}{1}\) and
+    \(\frac{1}{0}\) results in the sequence \(\frac{1}{1}\), \(\frac{2}{1}\),
+    \(\frac{3}{1}\)\ldots).
 
 \begin{longlisting}
 \inputminted{Pascal}{../USternBrocotSearch.pas}
@@ -269,8 +156,7 @@ properties of Form elements}
     You may notice that all of the mathematics is formatted in the form of
     \LaTeX\ source. This is the second best\footnote{For example, it beats
     straight utf-8 because it allows a user to render the maths using whatever
-    font they like in their head} way to format maths, beside rendered
-    \LaTeX.
+    font they like in their head} way to format maths, beside rendered \LaTeX.
 
     The program can be interacted with by clicking the buttons, or, as covered
     earlier, by pressing the appropriate keys. I have also chosen
@@ -283,10 +169,9 @@ properties of Form elements}
     Because of the various \mintinline{pascal}{writeln} statements I had
     included, I can easily capture the actions executed by the user and program
     without needing multiple screenshots. I first compiled using
-    \texttt{lazbuild} or Lazarus, and then ran
-    \mintinline{zsh}{./GUIssing > writeup/output.txt}.
-    This produced the file in listing \ref{lst:output}, after I executed a guess
-    for $\forall S \in \{\mathbb{Z}, \mathbb{Q}\}$.
+    \texttt{lazbuild} or Lazarus, and then ran \mintinline{zsh}{./GUIssing >
+    writeup/output.txt}. This produced the file in listing \ref{lst:output},
+    after I executed a guess for \(\forall S \in \{\mathbb{Z}, \mathbb{Q}\}\).
 
 \begin{longlisting}
 \inputminted{text}{output.txt}
@@ -297,9 +182,9 @@ properties of Form elements}
     and the underlying search engine. I have performed several more tests,
     including the cases
 
-    \begin{tabular}{rrrrrrrrrrrrr}
-    in $\mathbb{Z}$: & $0$     & $1$     & $-1$    & $200$   & $-130$  & $16$ \\
-    in $\mathbb{Q}$: & $0$ & $1$ & $3$ & $-3$ & $\frac{4}{3}$ & $\frac{5}{2}$ & $-\frac{5}{2}$ \\
+    \begin{tabular}{r *7M}
+        in \(\mathbb{Z}\): & 0     & 1     & -1    & 200   & -130  & 16 \\
+        in \(\mathbb{Q}\): & 0 & 1 & 3 & -3 & \frac{4}{3} & \frac{5}{2} & -\frac{5}{2} \\
     \end{tabular}
 
     These were not included as entire logs as this would be a
@@ -314,15 +199,15 @@ properties of Form elements}
 
     This is not a problem for the computer-generated guessing mode as each TEdit
     limits its input to 8 characters, leaving the user to input at largest
-    $10^8-1$. This is well within the range of a signed 32-bit integer
-    (\,$\abs{n} \lessapprox 2.1 \cdot 10^9$). Another non-bug in this part is if
-    the user enters a lower bound larger than the upper bound (let $a > b$). In
-    this case, a random number in the interval $[a, 2a - b) \cap \mathbb{Z}$ is
-    generated. For example, $a = 100, b = 50$ results in a number in
-    $\{100..149\}$. This is due to the fact that Pascal's \texttt{random} function
-    treats its input as an absolute value. This is ideal
-    behaviour\footnote{Users trying to mess with the program get messed with
-    instead}.
+    \(10^8-1\). This is well within the range of a signed 32-bit integer
+    (\,\(\abs{n} \lessapprox 2.1 \cdot 10^9\)). Another non-bug in this part is
+    if the user enters a lower bound larger than the upper bound (let \(a >
+    b\)). In this case, a random number in the interval \([a, 2a - b) \cap
+    \mathbb{Z}\) is generated. For example, \(a = 100, b = 50\) results in a
+    number in \(\{100..149\}\). This is due to the fact that Pascal's
+    \texttt{random} function treats its input as an absolute value. This is
+    ideal behaviour\footnote{Users trying to mess with the program get messed
+    with instead}.
 
 \begin{longlisting}
 \begin{minted}{text}
@@ -348,10 +233,5 @@ Question: Is 0 \le \abs{n} < 0?
     The full project in its directory structure, including this document (as a
     full-colour PDF and \TeX{} file), can be found at
     \url{https://github.com/goedel-gang/GUIssing}.
-
-    I would also like to take this moment to apologise for the aesthetics of my
-    previous PDFs, including the usage of the Computer Modern font, but
-    especially the fact that the code listings didn't use a proper fixed-width
-    font.
 
 \end{document}
